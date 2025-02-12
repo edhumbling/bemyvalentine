@@ -48,11 +48,19 @@ const Index = () => {
   };
 
   const handleNext = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+    if (currentStep === 1 && !valentineName.trim()) {
+      alert("Please enter your Valentine's name");
+      return;
+    }
+    if (currentStep === 2 && !personalMessage.trim()) {
+      alert("Please write a personal message");
+      return;
+    }
+    setCurrentStep(prev => Math.min(prev + 1, totalSteps));
   };
 
   const handlePrev = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 1));
+    setCurrentStep(prev => Math.max(prev - 1, 1));
   };
 
   return (
@@ -73,64 +81,55 @@ const Index = () => {
         </motion.div>
 
         <Card className="p-6 backdrop-blur-sm bg-white/80 shadow-xl border-valentine-primary/20">
-          {step === 0 && (
-            <QuestionSelector
-              allQuestions={questions}
-              onSelect={handleQuestionSelection}
-            />
-          )}
-          {step === 1 && (
-            <ValentineForm
-              questions={selectedQuestions}
-              onSubmit={handleAnswersSubmit}
-            />
-          )}
-          {step === 2 && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-playfair font-bold text-valentine-primary text-center">
-                Who's Your Valentine?
-              </h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-pink-600 font-semibold block mb-2">
-                    Your Valentine's Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={valentineName}
-                    onChange={(e) => setValentineName(e.target.value)}
-                    className="w-full p-3 rounded-lg border-2 border-pink-300"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="text-pink-600 font-semibold block mb-2">
-                    Personal Message *
-                  </label>
-                  <textarea
-                    value={personalMessage}
-                    onChange={(e) => setPersonalMessage(e.target.value)}
-                    className="w-full p-3 rounded-lg border-2 border-pink-300 h-32"
-                    maxLength={100}
-                    required
-                  />
-                </div>
-                <Button
-                  className="w-full bg-valentine-primary hover:bg-valentine-primary/90"
-                  onClick={() => handleValentineSubmit(valentineName, personalMessage)}
-                >
-                  Create Valentine
-                </Button>
+          {currentStep === 1 && (
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold text-pink-600 text-center">
+                Create Your Valentine
+              </h1>
+              <div>
+                <label className="text-pink-600 font-semibold block mb-2">
+                  Your Valentine's Name *
+                </label>
+                <input
+                  type="text"
+                  value={valentineName}
+                  onChange={(e) => setValentineName(e.target.value)}
+                  className="w-full p-3 rounded-lg border-2 border-pink-300"
+                  required
+                />
               </div>
             </div>
           )}
-          {step === 3 && (
-            <ShareCard
-              answers={answers}
-              valentineName={valentineName}
-              personalMessage={personalMessage}
-            />
+          {currentStep === 2 && (
+            <div className="space-y-4">
+              <h2 className="text-3xl font-bold text-pink-600 text-center">
+                Personalize Your Message
+              </h2>
+              <div>
+                <label className="text-pink-600 font-semibold block mb-2">
+                  Personal Message *
+                </label>
+                <textarea
+                  value={personalMessage}
+                  onChange={(e) => setPersonalMessage(e.target.value)}
+                  className="w-full p-3 rounded-lg border-2 border-pink-300 h-32"
+                  maxLength={100}
+                  required
+                />
+              </div>
+            </div>
+          )}
+          {currentStep === 3 && (
+            <div className="space-y-4">
+              <h2 className="text-3xl font-bold text-pink-600 text-center">
+                Review & Share
+              </h2>
+              <ShareCard 
+                answers={answers} 
+                valentineName={valentineName}
+                personalMessage={personalMessage}
+              />
+            </div>
           )}
         </Card>
 

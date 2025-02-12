@@ -28,11 +28,10 @@ export const FormStepper = ({ currentStep, totalSteps, onNext, onPrev }: FormSte
       <Button
         variant="outline"
         onClick={onNext}
-        disabled={currentStep === totalSteps}
         className="gap-1 bg-pink-100 hover:bg-pink-200 text-pink-600 border-pink-300"
       >
-        Next
-        <ArrowRight className="h-4 w-4" />
+        {currentStep === totalSteps ? 'Complete' : 'Next'}
+        {currentStep < totalSteps && <ArrowRight className="h-4 w-4" />}
       </Button>
     </div>
   );
