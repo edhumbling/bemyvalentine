@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -27,6 +26,13 @@ const Index = () => {
   const [valentineName, setValentineName] = useState("");
   const [personalMessage, setPersonalMessage] = useState("");
   const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    const videoPopup = document.getElementById("video-popup");
+    if (videoPopup) {
+      videoPopup.classList.add("show");
+    }
+  }, []);
 
   const handleQuestionSelection = (questions: string[]) => {
     setSelectedQuestions(questions);
