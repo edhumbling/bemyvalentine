@@ -15,8 +15,12 @@
     "allowJs": true,
     "noUnusedLocals": false,
     "strictNullChecks": false,
-    "module": "ESNext",
+    "module": "Node",
     "moduleResolution": "NodeNext",
-    "target": "ESNext"
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
   }
 }
