@@ -40,3 +40,17 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Styling for the 'Yes' (red) and 'No' (yellow) buttons */
+button.bg-red-500 {
+  background-color: #f56565;
+}
+button.bg-red-500:hover {
+  background-color: #e53e3e;
+}
+button.bg-yellow-500 {
+  background-color: #ecc94b;
+}
+button.bg-yellow-500:hover {
+  background-color: #d69e2e;
+}
