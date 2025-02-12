@@ -33,12 +33,21 @@ const ShareCard = ({ answers, valentineName, personalMessage }: ShareCardProps) 
   };
 
   const formatMessage = () => {
-    let message = `❤️ *A Special Valentine's Message for ${valentineName}* ❤️\n\n`;
-    message += `${personalMessage}\n\n`;
+    let message = `💘✨ *A Magical Valentine's Experience for ${valentineName}* ✨💘\n\n`;
+    message += `🌹 ${personalMessage} 🌹\n\n`;
+    
     Object.entries(answers).forEach(([question, answer]) => {
-      message += `*${question}*\n${answer}\n\n`;
+      message += `💞 *${question}*\n${answer}\n\n`;
     });
-    message += "💝 Will you be my Valentine? 💝";
+
+    message += `🎉💌 *Will You Be My Valentine?* 💌🎉\n\n`;
+    message += "👇 *Choose Your Response* 👇\n";
+    message += "1️⃣  Yes! Absolutely! 😍💖\n";
+    message += "2️⃣  Maybe... Let's Talk More 🌹💬\n";
+    message += "3️⃣  I Need Time to Think ⏳💭\n\n";
+    message += "💐 Whatever you choose, my heart remains yours 💐\n\n";
+    message += "✨🖼️ _Crafted with love via beemyvalentine.netlify.app_ 🖼️✨";
+
     return encodeURIComponent(message);
   };
 
