@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import QuestionSelector from "@/components/QuestionSelector";
 import ValentineForm from "@/components/ValentineForm";
 import ShareCard from "@/components/ShareCard";
-import PhoneInputForm from '../components/PhoneInputForm';
+import PhoneInput from '../components/PhoneInput';
 
 const questions = [
   "What's your favorite memory of us together?",
@@ -112,7 +112,7 @@ const Index = () => {
           )}
         </Card>
 
-        <PhoneInputForm responses={responses} />
+        <PhoneInput />
       </div>
     </div>
   );
