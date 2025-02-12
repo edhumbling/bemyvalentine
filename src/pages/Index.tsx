@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -29,6 +29,14 @@ const Index = () => {
   const [step, setStep] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+  const [showVideo, setShowVideo] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowVideo(false);
+    }, 5000); // Hide the video after 5 seconds
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleQuestionSelection = (questions: string[]) => {
     setSelectedQuestions(questions);
@@ -67,6 +75,16 @@ const Index = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+      {showVideo && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg">
+            <script src="https://fast.wistia.com/player.js" async></script>
+            <script src="https://fast.wistia.com/embed/gkkws8y4s5.js" async type="module"></script>
+            <style>wistia-player[media-id='gkkws8y4s5']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/gkkws8y4s5/swatch'); display: block; filter: blur(5px); padding-top:177.78%; }</style>
+            <wistia-player media-id="gkkws8y4s5" aspect="0.5625"></wistia-player>
+          </div>
+        </div>
+      )}
       <div className="max-w-2xl mx-auto space-y-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
