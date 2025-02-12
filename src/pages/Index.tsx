@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
@@ -7,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import QuestionSelector from "@/components/QuestionSelector";
 import ValentineForm from "@/components/ValentineForm";
 import ShareCard from "@/components/ShareCard";
+import Confetti from "react-confetti";
 
 const questions = [
   "What's your favorite memory of us together?",
@@ -27,6 +27,8 @@ const Index = () => {
   const [valentineName, setValentineName] = useState("");
   const [personalMessage, setPersonalMessage] = useState("");
   const [step, setStep] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showNoMessage, setShowNoMessage] = useState(false);
 
   const handleQuestionSelection = (questions: string[]) => {
     setSelectedQuestions(questions);
@@ -44,6 +46,18 @@ const Index = () => {
     setStep(3);
   };
 
+  const handleYesClick = () => {
+    setShowConfetti(true);
+    setTimeout(() => {
+      setShowConfetti(false);
+      setStep(1);
+    }, 3000);
+  };
+
+  const handleNoClick = () => {
+    setShowNoMessage(true);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-valentine-secondary to-white py-8 px-4">
       <div className="max-w-2xl mx-auto space-y-8">
@@ -54,12 +68,30 @@ const Index = () => {
         >
           <Heart className="w-12 h-12 text-valentine-primary mx-auto animate-float" />
           <h1 className="font-playfair text-4xl md:text-5xl font-bold text-valentine-primary">
-            Be My Valentine?
+            Will you be my Valentine?
           </h1>
-          <p className="text-lg text-gray-600">
-            Express your love with a personalized message
-          </p>
+          <div className="flex justify-center space-x-4">
+            <Button
+              className="bg-red-500 hover:bg-red-600 text-white"
+              onClick={handleYesClick}
+            >
+              Yes
+            </Button>
+            <Button
+              className="bg-yellow-500 hover:bg-yellow-600 text-white"
+              onClick={handleNoClick}
+            >
+              No
+            </Button>
+          </div>
+          {showNoMessage && (
+            <p className="text-lg text-gray-600 mt-4">
+              Okay, that's fine! I hope to find my Valentine soon! Thanks for letting me know.
+            </p>
+          )}
         </motion.div>
+
+        {showConfetti && <Confetti />}
 
         <Card className="p-6 backdrop-blur-sm bg-white/80 shadow-xl border-valentine-primary/20">
           {step === 0 && (
