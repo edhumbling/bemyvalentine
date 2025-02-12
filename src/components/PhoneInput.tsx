@@ -11,8 +11,8 @@ const PhoneInput = () => {
         </label>
         <input
           type="tel"
-          placeholder="Example: 233XXXXXXXXX (Ghana)"
-          className="w-full p-3 rounded-lg border-2 border-pink-300 focus:border-pink-500 focus:ring-pink-500 text-lg"
+          placeholder="Enter Phone Number"
+          className="w-full p-3 rounded-lg border-2 border-pink-300 focus:border-pink-500 text-lg"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
