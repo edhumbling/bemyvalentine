@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import QuestionSelector from "@/components/QuestionSelector";
 import ValentineForm from "@/components/ValentineForm";
 import ShareCard from "@/components/ShareCard";
+import { FormStepper } from "../components/FormStepper";
 
 const questions = [
   "What's your favorite memory of us together?",
@@ -27,6 +28,8 @@ const Index = () => {
   const [personalMessage, setPersonalMessage] = useState("");
   const [step, setStep] = useState(0);
   const [responses, setResponses] = useState<Record<string, string>>({});
+  const [currentStep, setCurrentStep] = useState(1);
+  const totalSteps = 3; // Update this with your actual number of steps
 
   const handleQuestionSelection = (questions: string[]) => {
     setSelectedQuestions(questions);
@@ -42,6 +45,14 @@ const Index = () => {
     setValentineName(name);
     setPersonalMessage(message);
     setStep(3);
+  };
+
+  const handleNext = () => {
+    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+  };
+
+  const handlePrev = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
   return (
@@ -110,6 +121,13 @@ const Index = () => {
             />
           )}
         </Card>
+
+        <FormStepper
+          currentStep={currentStep}
+          totalSteps={totalSteps}
+          onNext={handleNext}
+          onPrev={handlePrev}
+        />
       </div>
     </div>
   );
