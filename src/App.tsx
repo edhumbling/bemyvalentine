@@ -12,8 +12,8 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <div className="flex flex-col min-h-screen">
-        <div className="flex-grow">
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-grow">
           <Toaster />
           <Sonner />
           <BrowserRouter>
@@ -23,7 +23,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
-        </div>
+        </main>
         <Footer />
       </div>
     </TooltipProvider>
