@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
@@ -7,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import QuestionSelector from "@/components/QuestionSelector";
 import ValentineForm from "@/components/ValentineForm";
 import ShareCard from "@/components/ShareCard";
+import Confetti from "react-confetti";
 
 const questions = [
   "What's your favorite memory of us together?",
@@ -27,6 +27,8 @@ const Index = () => {
   const [valentineName, setValentineName] = useState("");
   const [personalMessage, setPersonalMessage] = useState("");
   const [step, setStep] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   const handleQuestionSelection = (questions: string[]) => {
     setSelectedQuestions(questions);
@@ -44,8 +46,27 @@ const Index = () => {
     setStep(3);
   };
 
+  const handleYesClick = () => {
+    setShowConfetti(true);
+    setTimeout(() => {
+      setShowConfetti(false);
+      setStep(1);
+    }, 3000);
+  };
+
+  const handleNoClick = () => {
+    setShowMessage(true);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-valentine-secondary to-white py-8 px-4">
+    <div
+      className="min-h-screen bg-gradient-to-b from-valentine-secondary to-white py-8 px-4"
+      style={{
+        backgroundImage: "url('https://i.postimg.cc/QMSKC9BW/Snap-BG-ai-1739330275236.png')",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="max-w-2xl mx-auto space-y-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -63,44 +84,42 @@ const Index = () => {
 
         <Card className="p-6 backdrop-blur-sm bg-white/80 shadow-xl border-valentine-primary/20">
           {step === 0 && (
+            <div className="space-y-6 text-center">
+              <p className="text-2xl font-playfair font-bold text-valentine-primary">
+                Will you be my Valentine?
+              </p>
+              <div className="flex justify-center space-x-4">
+                <Button
+                  className="bg-red-500 hover:bg-red-600 text-white"
+                  onClick={handleYesClick}
+                >
+                  Yes
+                </Button>
+                <Button
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white"
+                  onClick={handleNoClick}
+                >
+                  No
+                </Button>
+              </div>
+              {showMessage && (
+                <p className="text-lg text-gray-600 mt-4">
+                  Okay, that's fine I hope to find my Valentine soon! Thanks for letting me know.
+                </p>
+              )}
+            </div>
+          )}
+          {step === 1 && (
             <QuestionSelector
               allQuestions={questions}
               onSelect={handleQuestionSelection}
             />
           )}
-          {step === 1 && (
+          {step === 2 && (
             <ValentineForm
               questions={selectedQuestions}
               onSubmit={handleAnswersSubmit}
             />
-          )}
-          {step === 2 && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-playfair font-bold text-valentine-primary text-center">
-                Who's Your Valentine?
-              </h2>
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Their name"
-                  className="w-full p-3 border rounded-md"
-                  value={valentineName}
-                  onChange={(e) => setValentineName(e.target.value)}
-                />
-                <textarea
-                  placeholder="Write a personal message..."
-                  className="w-full p-3 border rounded-md h-32"
-                  value={personalMessage}
-                  onChange={(e) => setPersonalMessage(e.target.value)}
-                />
-                <Button
-                  className="w-full bg-valentine-primary hover:bg-valentine-primary/90"
-                  onClick={() => handleValentineSubmit(valentineName, personalMessage)}
-                >
-                  Create Valentine
-                </Button>
-              </div>
-            </div>
           )}
           {step === 3 && (
             <ShareCard
@@ -111,6 +130,7 @@ const Index = () => {
           )}
         </Card>
       </div>
+      {showConfetti && <Confetti />}
     </div>
   );
 };
