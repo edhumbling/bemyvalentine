@@ -8,7 +8,7 @@ import ValentineForm from "@/components/ValentineForm";
 import ShareCard from "@/components/ShareCard";
 import { FormStepper } from "../components/FormStepper";
 import { PrivacyDisclaimer } from '../components/PrivacyDisclaimer';
-import { Footer } from '../components/Footer';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 const Index = () => {

@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound"; 
-import Footer from "./components/Footer";
+import Footer from './components/Footer';
 import VideoModal from "./components/VideoModal";
 
 const queryClient = new QueryClient();

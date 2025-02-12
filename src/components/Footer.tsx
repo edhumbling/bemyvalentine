@@ -1,4 +1,4 @@
-export const Footer = () => {
+const Footer = () => {
   return (
     <footer className="text-center p-4 bg-pink-100 space-y-2">
       <p className="text-sm text-pink-500 max-w-xs mx-auto">
@@ -18,4 +18,6 @@ export const Footer = () => {
       </p>
     </footer>
   );
-}; 
+};
+
+export default Footer; 
