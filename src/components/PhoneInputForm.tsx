@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import html2canvas from 'html2canvas';
-import { countries } from 'country-data'; // You'll need to install this
 
 type PhoneInputProps = {
   responses: Record<string, string>;
 };
 
 const PhoneInputForm = ({ responses }: PhoneInputProps) => {
-  const [countryCode, setCountryCode] = useState('+233');
-  const [phoneNumber, setPhoneNumber] = useState('');
-
   const generateImage = async () => {
     const element = document.getElementById('valentine-card');
     if (element) {
-      // Temporarily add the referral text
+      // Temporarily add the bold referral text to the image
       const referral = document.createElement('div');
       referral.innerHTML = '<strong>Generated via beemyvalentine.netlify.app</strong>';
       referral.style.position = 'absolute';
@@ -25,7 +21,7 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
       referral.className = 'referral-text';
       element.appendChild(referral);
 
-      // Add decorative emojis (simulate cute 3D emojis) and sparkles
+      // Add decorative emojis (simulated 3D emojis) and sparkles
       const emojis = ['❤️', '💖', '💕', '✨', '🎉'];
       emojis.forEach(() => {
         const span = document.createElement('span');
@@ -42,7 +38,7 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
       const canvas = await html2canvas(element);
       const image = canvas.toDataURL('image/png');
 
-      // Remove the temporary elements
+      // Remove temporary elements after capture
       referral.remove();
       const sparkles = element.querySelectorAll('.emoji-sparkle');
       sparkles.forEach((el) => el.remove());
@@ -51,6 +47,7 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
     }
   };
 
+  // Download the generated image
   const handleDownload = async () => {
     const imageData = await generateImage();
     if (imageData) {
@@ -61,17 +58,20 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
     }
   };
 
+  // When the user clicks "Send via WhatsApp", use a prompt to ask for the contact
   const handleSend = async () => {
+    const fullNumber = window.prompt(
+      "Please enter the complete phone number with country code (e.g., +1234567890):"
+    );
+    if (!fullNumber) return;
     const imageData = await generateImage();
-    const fullNumber = `${countryCode}${phoneNumber}`;
     const shareText = `❤️ Your Valentine's Message:\n${Object.entries(responses)
       .map(([q, a]) => `${q}: ${a}`)
       .join('\n')}\n\nGenerated via beemyvalentine.netlify.app`;
-
     window.open(
-      `https://wa.me/${fullNumber}?text=${encodeURIComponent(
-        shareText
-      )}${imageData ? `&media=${encodeURIComponent(imageData)}` : ''}`
+      `https://wa.me/${fullNumber}?text=${encodeURIComponent(shareText)}${
+        imageData ? `&media=${encodeURIComponent(imageData)}` : ''
+      }`
     );
   };
 
@@ -92,47 +92,23 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
         </div>
       </div>
 
-      {/* Phone Number Inputs & Buttons */}
-      <div className="flex flex-col space-y-4">
-        <div className="flex gap-2">
-          <select
-            value={countryCode}
-            onChange={(e) => setCountryCode(e.target.value)}
-            className="p-2 rounded-lg border-2 border-pink-300 focus:border-pink-500 w-20"
-          >
-            {countries.all.map((country: any) => (
-              <option key={country.alpha2} value={country.countryCallingCodes[0]}>
-                {country.emoji} {country.countryCallingCodes[0]}
-              </option>
-            ))}
-          </select>
-          <input
-            type="tel"
-            placeholder="Phone number"
-            className="flex-grow p-2 rounded-lg border-2 border-pink-300 focus:border-pink-500"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          />
-        </div>
-
-        {/* Stacked buttons */}
-        <div className="flex flex-col gap-2">
-          <button
-            onClick={handleDownload}
-            className="w-fit bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-md"
-          >
-            Download Responses
-          </button>
-          <button
-            onClick={handleSend}
-            className="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full"
-          >
-            Send via WhatsApp
-          </button>
-        </div>
+      {/* Buttons: Download Responses and Send via WhatsApp (stacked vertically) */}
+      <div className="flex flex-col gap-2">
+        <button
+          onClick={handleDownload}
+          className="w-fit bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-md mx-auto"
+        >
+          Download Responses
+        </button>
+        <button
+          onClick={handleSend}
+          className="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full"
+        >
+          Send via WhatsApp
+        </button>
       </div>
     </div>
   );
 };
 
-export default PhoneInputForm; 
+export default PhoneInputForm;
