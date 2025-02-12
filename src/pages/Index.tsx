@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
@@ -7,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import QuestionSelector from "@/components/QuestionSelector";
 import ValentineForm from "@/components/ValentineForm";
 import ShareCard from "@/components/ShareCard";
+import PhoneInputForm from '../components/PhoneInputForm';
 
 const questions = [
   "What's your favorite memory of us together?",
@@ -27,6 +27,7 @@ const Index = () => {
   const [valentineName, setValentineName] = useState("");
   const [personalMessage, setPersonalMessage] = useState("");
   const [step, setStep] = useState(0);
+  const [responses, setResponses] = useState<Record<string, string>>({});
 
   const handleQuestionSelection = (questions: string[]) => {
     setSelectedQuestions(questions);
@@ -110,6 +111,8 @@ const Index = () => {
             />
           )}
         </Card>
+
+        <PhoneInputForm responses={responses} />
       </div>
     </div>
   );
