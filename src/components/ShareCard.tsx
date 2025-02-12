@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -50,6 +49,45 @@ const ShareCard = ({ answers, valentineName, personalMessage }: ShareCardProps) 
     window.open(`https://wa.me/${formattedPhone}?text=${message}`, "_blank");
   };
 
+  const renderValentinePreview = () => (
+    <div id="valentine-card" className="bg-pink-50 rounded-lg p-6 shadow-md mb-8">
+      {Object.entries(answers).map(([question, answer]) => (
+        <div key={question} className="mb-4">
+          <h3 className="text-pink-600 font-semibold">{question}</h3>
+          <p className="text-pink-800 mt-1">{answer}</p>
+        </div>
+      ))}
+    </div>
+  );
+
+  const renderPhoneInput = () => (
+    <div className="space-y-2">
+      <label className="text-pink-600 font-semibold block">
+        You are My Valentine 💌
+      </label>
+      <div className="flex items-center space-x-3">
+        <input
+          type="tel"
+          placeholder="233XXXXXXXXX (Example: Ghana)"
+          className="w-full p-3 rounded-lg border-2 border-pink-300 focus:border-pink-500 text-lg"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        <Button
+          className="bg-valentine-primary hover:bg-valentine-primary/90"
+          onClick={handleWhatsAppShare}
+          disabled={!phoneNumber}
+        >
+          <Send className="w-4 h-4 mr-2" />
+          Send via WhatsApp
+        </Button>
+      </div>
+      <p className="text-sm text-pink-500 mt-1">
+        🔢 Include country code without '+' (e.g., 233 for Ghana, 234 for Nigeria)
+      </p>
+    </div>
+  );
+
   return (
     <div className="space-y-6">
       <motion.div
@@ -73,79 +111,10 @@ const ShareCard = ({ answers, valentineName, personalMessage }: ShareCardProps) 
         </motion.h2>
       </motion.div>
 
-      <div
-        id="valentine-card"
-        className="p-6 rounded-lg bg-gradient-to-br from-valentine-primary/5 to-white shadow-lg border-2 border-valentine-primary/20 space-y-6 relative overflow-hidden"
-      >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-center space-y-4 relative"
-        >
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -20, 0],
-                opacity: [0.4, 1, 0.4],
-              }}
-              transition={{
-                duration: 2,
-                delay: i * 0.5,
-                repeat: Infinity,
-              }}
-            >
-              <Heart className="w-6 h-6 text-valentine-primary/40" />
-            </motion.div>
-          ))}
-          <Heart className="w-12 h-12 text-valentine-primary mx-auto animate-float" />
-          <h2 className="text-3xl font-playfair font-bold text-valentine-primary">
-            Dear {valentineName}
-          </h2>
-          <p className="text-gray-600 italic">{personalMessage}</p>
-        </motion.div>
-
-        <div className="space-y-4">
-          {Object.entries(answers).map(([question, answer], index) => (
-            <motion.div
-              key={question}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.2 }}
-              className="space-y-2"
-            >
-              <h3 className="font-medium text-gray-700">{question}</h3>
-              <p className="text-gray-600 bg-valentine-primary/5 p-3 rounded-md">
-                {answer}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
+      {renderValentinePreview()}
+      
       <div className="space-y-4">
-        <div className="flex items-center space-x-3">
-          <Input
-            type="tel"
-            placeholder="Enter their phone number"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            className="flex-1"
-          />
-          <Button
-            className="bg-valentine-primary hover:bg-valentine-primary/90"
-            onClick={handleWhatsAppShare}
-            disabled={!phoneNumber}
-          >
-            <Send className="w-4 h-4 mr-2" />
-            Send via WhatsApp
-          </Button>
-        </div>
+        {renderPhoneInput()}
 
         <div className="flex gap-4">
           <Button
