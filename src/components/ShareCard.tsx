@@ -16,31 +16,41 @@ const ShareCard = ({ answers, valentineName, personalMessage }: ShareCardProps) 
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleDownload = async () => {
-    setIsGenerating(true);
-    try {
-      const element = document.getElementById("valentine-card");
-      if (element) {
-        const canvas = await html2canvas(element);
-        const link = document.createElement("a");
-        link.download = "valentine-message.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-      }
-    } catch (error) {
-      console.error("Error generating image:", error);
-    }
-    setIsGenerating(false);
+    const footerText = "Crafted with 💖 using beemyvalentine.netlify.app";
+    
+    // Add temporary footer element
+    const footer = document.createElement('div');
+    footer.style.position = 'absolute';
+    footer.style.bottom = '20px';
+    footer.style.width = '100%';
+    footer.style.textAlign = 'center';
+    footer.style.color = '#db2777';
+    footer.style.fontSize = '12px';
+    footer.innerText = footerText;
+    
+    const element = document.getElementById("valentine-card");
+    element?.appendChild(footer);
+
+    // Capture and download
+    const canvas = await html2canvas(element!);
+    const link = document.createElement("a");
+    link.download = "valentine-message.png";
+    link.href = canvas.toDataURL();
+    link.click();
+    
+    // Cleanup
+    element?.removeChild(footer);
   };
 
   const formatMessage = () => {
-    let message = `💘✨ *A Magical Valentine's Experience for ${valentineName}* ✨💘\n\n`;
-    message += `🌹 ${personalMessage} 🌹\n\n`;
+    let message = `✨💘 *A Magical Valentine's Experience for ${valentineName}* 💘✨\n\n`;
+    message += `🌹💌 ${personalMessage} 💌🌹\n\n`;
     
     Object.entries(answers).forEach(([question, answer]) => {
       message += `💞 *${question}*\n${answer}\n\n`;
     });
 
-    message += `🎉💌 *Will You Be My Valentine?* 💌🎉\n\n`;
+    message += `🎉💐 *Will You Be My Valentine?* 💐🎉\n\n`;
     message += "👇 *Choose Your Response* 👇\n";
     message += "1️⃣  Yes! Absolutely! 😍💖\n";
     message += "2️⃣  Maybe... Let's Talk More 🌹💬\n";
