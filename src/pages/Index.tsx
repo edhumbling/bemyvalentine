@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -27,6 +26,32 @@ const Index = () => {
   const [valentineName, setValentineName] = useState("");
   const [personalMessage, setPersonalMessage] = useState("");
   const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    // Trigger the Wistia popover video on component mount
+    const script1 = document.createElement("script");
+    script1.src = "https://fast.wistia.com/player.js";
+    script1.async = true;
+    document.body.appendChild(script1);
+
+    const script2 = document.createElement("script");
+    script2.src = "https://fast.wistia.com/embed/0gl7bi8hqg.js";
+    script2.async = true;
+    script2.type = "module";
+    document.body.appendChild(script2);
+
+    const style = document.createElement("style");
+    style.innerHTML = "wistia-player[media-id='0gl7bi8hqg']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/0gl7bi8hqg/swatch'); display: block; filter: blur(5px); }";
+    document.body.appendChild(style);
+
+    const wistiaPlayer = document.createElement("wistia-player");
+    wistiaPlayer.setAttribute("media-id", "0gl7bi8hqg");
+    wistiaPlayer.setAttribute("wistia-popover", "true");
+    wistiaPlayer.setAttribute("aspect", "0.5625");
+    wistiaPlayer.style.width = "150px";
+    wistiaPlayer.style.height = "267px";
+    document.body.appendChild(wistiaPlayer);
+  }, []);
 
   const handleQuestionSelection = (questions: string[]) => {
     setSelectedQuestions(questions);
