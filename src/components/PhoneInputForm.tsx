@@ -7,15 +7,18 @@ type PhoneInputProps = {
 };
 
 const PhoneInputForm = ({ responses }: PhoneInputProps) => {
-  const [countryCode, setCountryCode] = useState('+233');
+  const [countryCode, setCountryCode] = useState('233');
   const [phoneNumber, setPhoneNumber] = useState('');
 
   const generateImage = async () => {
     const element = document.getElementById('valentine-card');
     if (element) {
-      // Create a referral element to inject into the image (for download or WhatsApp share)
       const referral = document.createElement('div');
-      referral.innerHTML = '<strong>Generated via beemyvalentine.netlify.app</strong>';
+      referral.innerHTML = `
+        <strong>💝 Spread the Love! 💝</strong><br>
+        Create your own sweet message at<br>
+        <em>beemyvalentine.netlify.app</em>
+      `;
       referral.style.position = 'absolute';
       referral.style.bottom = '10px';
       referral.style.left = '50%';
@@ -25,11 +28,9 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
       referral.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
       referral.style.padding = '4px 8px';
       referral.style.borderRadius = '4px';
-      referral.className = 'referral-text';
       element.appendChild(referral);
 
-      // Add decorative emojis and sparkles for a cute 3D effect
-      const emojis = ['❤️', '💖', '💕', '✨', '🎉'];
+      const emojis = ['💖', '💞', '🌸', '🌠', '💫', '🥰', '😍', '💝'];
       emojis.forEach(() => {
         const span = document.createElement('span');
         span.className = 'emoji-sparkle';
@@ -45,7 +46,6 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
       const canvas = await html2canvas(element);
       const image = canvas.toDataURL('image/png');
 
-      // Cleanup temporary additions
       referral.remove();
       const sparkles = element.querySelectorAll('.emoji-sparkle');
       sparkles.forEach((el) => el.remove());
@@ -65,12 +65,22 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
   };
 
   const handleSend = async () => {
-    // Combine the country code and phone number from the inputs
     const fullNumber = `${countryCode}${phoneNumber}`;
     const imageData = await generateImage();
-    const shareText = `❤️ Your Valentine's Message:\n${Object.entries(responses)
-      .map(([q, a]) => `${q}: ${a}`)
-      .join('\n')}\n\nGenerated via beemyvalentine.netlify.app`;
+    
+    const shareText = `💌 My Dearest Valentine 💘
+
+✨ Your Special Message ✨
+${Object.entries(responses)
+  .map(([q, a]) => `🌹 ${q}:\n${a}`)
+  .join('\n\n')}
+
+💖 You Mean the World to Me 💖
+This Valentine's Day and always, my heart is yours.
+
+📱 Create Your Own Sweet Message:
+beemyvalentine.netlify.app`;
+
     window.open(
       `https://wa.me/${fullNumber}?text=${encodeURIComponent(
         shareText
@@ -95,7 +105,7 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
         </div>
       </div>
 
-      {/* "You are My Valentine" Section: Phone Input fields */}
+      {/* "You are My Valentine" Section */}
       <div className="flex flex-col space-y-4">
         <label className="font-semibold text-pink-900 text-lg">
           You are My Valentine
@@ -107,7 +117,10 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
             className="p-2 rounded-lg border-2 border-pink-300 focus:border-pink-500 w-20"
           >
             {countries.all.map((country: any) => (
-              <option key={country.alpha2} value={country.countryCallingCodes[0]}>
+              <option
+                key={country.alpha2}
+                value={country.countryCallingCodes[0].replace('+', '')}
+              >
                 {country.emoji} {country.countryCallingCodes[0]}
               </option>
             ))}
@@ -121,17 +134,17 @@ const PhoneInputForm = ({ responses }: PhoneInputProps) => {
           />
         </div>
 
-        {/* Buttons: Send via WhatsApp and Download Responses */}
+        {/* Buttons: Uniform and responsive */}
         <div className="flex flex-col md:flex-row gap-2">
           <button
             onClick={handleSend}
-            className="w-full md:w-1/2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg"
+            className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg transition-colors"
           >
             Send via WhatsApp
           </button>
           <button
             onClick={handleDownload}
-            className="w-full md:w-1/2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 rounded-lg"
+            className="w-full bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 rounded-lg transition-colors"
           >
             Download Responses
           </button>
