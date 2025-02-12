@@ -9,6 +9,7 @@ import ShareCard from "@/components/ShareCard";
 import { FormStepper } from "../components/FormStepper";
 import { PrivacyDisclaimer } from '../components/PrivacyDisclaimer';
 import { Footer } from '../components/Footer';
+import Header from '../components/Header';
 
 const questions = [
   "What's your favorite memory of us together?",
