@@ -11,25 +11,40 @@ import { PrivacyDisclaimer } from '../components/PrivacyDisclaimer';
 import { Footer } from '../components/Footer';
 import Header from '../components/Header';
 
-const questions = [
-  "What's your favorite memory of us together?",
-  "When did you first realize you had feelings for me?",
-  "What's the one thing you love most about our relationship?",
-  "Where do you see us in 5 years?",
-  "What's the most romantic thing I've done for you?",
-  "What song reminds you of us?",
-  "What's your dream date with me?",
-  "What's the little thing I do that makes you smile?",
-  "What's your favorite way to show me you care?",
-  "If you could relive one moment with me, what would it be?",
-];
-
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedQuestions, setSelectedQuestions] = useState<string[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [valentineName, setValentineName] = useState('');
   const [personalMessage, setPersonalMessage] = useState('');
+
+  // Sample questions - replace with your actual list
+  const allQuestions = [
+    "What first attracted you to me?",
+    "Our favorite shared memory?",
+    "What makes our connection special?",
+    "How would you describe my smile?",
+    "Favorite thing about my personality?",
+    "Where do you see us in 5 years?",
+    "My most endearing quality?",
+    "What song reminds you of us?",
+    "How have I changed your life?",
+    "Perfect date night idea?"
+  ];
+
+  const handleQuestionSelect = (question: string) => {
+    setSelectedQuestions(prev => 
+      prev.includes(question) 
+        ? prev.filter(q => q !== question)
+        : prev.length < 3 
+          ? [...prev, question] 
+          : prev
+    );
+  };
+
+  const handleAnswerChange = (question: string, answer: string) => {
+    setAnswers(prev => ({ ...prev, [question]: answer }));
+  };
 
   // Step progression handlers
   const handleNext = () => {
@@ -49,18 +64,6 @@ const Index = () => {
       case 3: return valentineName.trim() && personalMessage.trim();
       default: return true;
     }
-  };
-
-  const handleQuestionSelect = (question: string) => {
-    if (selectedQuestions.includes(question)) {
-      setSelectedQuestions(selectedQuestions.filter((q) => q !== question));
-    } else {
-      setSelectedQuestions([...selectedQuestions, question]);
-    }
-  };
-
-  const handleAnswerChange = (question: string, value: string) => {
-    setAnswers({ ...answers, [question]: value });
   };
 
   return (
@@ -88,7 +91,7 @@ const Index = () => {
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {questions.map((question) => (
+              {allQuestions.map((question) => (
                 <motion.div
                   key={question}
                   whileHover={{ scale: 1.05 }}
