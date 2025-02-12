@@ -14,7 +14,21 @@
     <div id="root">
       <img src="https://i.postimg.cc/Dfp0t3sn/Snap-BG-ai-1739330275236.png" alt="Logo" />
     </div>
+    <div id="video-popup">
+      <script src="https://fast.wistia.com/player.js" async></script>
+      <script src="https://fast.wistia.com/embed/gkkws8y4s5.js" async type="module"></script>
+      <style>
+        wistia-player[media-id='gkkws8y4s5']:not(:defined) { 
+          background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/gkkws8y4s5/swatch'); 
+          display: block; 
+          filter: blur(5px); 
+          padding-top:177.78%; 
+        }
+      </style>
+      <wistia-player media-id="gkkws8y4s5" aspect="0.5625"></wistia-player>
+    </div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    <script src="video-popup.js"></script>
   </body>
 </html>
