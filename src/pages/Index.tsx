@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -7,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import QuestionSelector from "@/components/QuestionSelector";
 import ValentineForm from "@/components/ValentineForm";
 import ShareCard from "@/components/ShareCard";
+import VideoPopup from "@/components/VideoPopup";
 
 const questions = [
   "What's your favorite memory of us together?",
@@ -27,6 +27,11 @@ const Index = () => {
   const [valentineName, setValentineName] = useState("");
   const [personalMessage, setPersonalMessage] = useState("");
   const [step, setStep] = useState(0);
+  const [showVideo, setShowVideo] = useState(true);
+
+  useEffect(() => {
+    setShowVideo(true);
+  }, []);
 
   const handleQuestionSelection = (questions: string[]) => {
     setSelectedQuestions(questions);
@@ -111,6 +116,7 @@ const Index = () => {
           )}
         </Card>
       </div>
+      {showVideo && <VideoPopup onClose={() => setShowVideo(false)} />}
     </div>
   );
 };
