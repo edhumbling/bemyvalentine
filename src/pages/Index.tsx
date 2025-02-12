@@ -91,19 +91,31 @@ const Index = () => {
                 Who's Your Valentine?
               </h2>
               <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Their name"
-                  className="w-full p-3 border rounded-md"
-                  value={valentineName}
-                  onChange={(e) => setValentineName(e.target.value)}
-                />
-                <textarea
-                  placeholder="Write a personal message..."
-                  className="w-full p-3 border rounded-md h-32"
-                  value={personalMessage}
-                  onChange={(e) => setPersonalMessage(e.target.value)}
-                />
+                <div>
+                  <label className="text-pink-600 font-semibold block mb-2">
+                    Your Valentine's Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={valentineName}
+                    onChange={(e) => setValentineName(e.target.value)}
+                    className="w-full p-3 rounded-lg border-2 border-pink-300"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="text-pink-600 font-semibold block mb-2">
+                    Personal Message *
+                  </label>
+                  <textarea
+                    value={personalMessage}
+                    onChange={(e) => setPersonalMessage(e.target.value)}
+                    className="w-full p-3 rounded-lg border-2 border-pink-300 h-32"
+                    maxLength={100}
+                    required
+                  />
+                </div>
                 <Button
                   className="w-full bg-valentine-primary hover:bg-valentine-primary/90"
                   onClick={() => handleValentineSubmit(valentineName, personalMessage)}

@@ -50,7 +50,18 @@ const ShareCard = ({ answers, valentineName, personalMessage }: ShareCardProps) 
   };
 
   const renderValentinePreview = () => (
-    <div id="valentine-card" className="bg-pink-50 rounded-lg p-6 shadow-md mb-8">
+    <div id="valentine-card" className="bg-pink-50 rounded-lg p-6 shadow-md mb-8 relative min-h-[400px]">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold text-pink-600 mb-2">
+          My Valentine 💖
+        </h2>
+        <p className="text-xl text-pink-700">{valentineName}</p>
+      </div>
+
+      <div className="mb-6 p-4 bg-white rounded-lg">
+        <p className="text-pink-800 italic">"{personalMessage}"</p>
+      </div>
+
       {Object.entries(answers).map(([question, answer]) => (
         <div key={question} className="mb-4">
           <h3 className="text-pink-600 font-semibold">{question}</h3>
