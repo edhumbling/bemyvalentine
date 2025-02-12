@@ -7,6 +7,8 @@ import QuestionSelector from "@/components/QuestionSelector";
 import ValentineForm from "@/components/ValentineForm";
 import ShareCard from "@/components/ShareCard";
 import { FormStepper } from "../components/FormStepper";
+import { PrivacyDisclaimer } from '../components/PrivacyDisclaimer';
+import { Footer } from '../components/Footer';
 
 const questions = [
   "What's your favorite memory of us together?",
@@ -184,6 +186,9 @@ const Index = () => {
           />
         </div>
       </div>
+
+      <PrivacyDisclaimer />
+      <Footer />
     </div>
   );
 };
